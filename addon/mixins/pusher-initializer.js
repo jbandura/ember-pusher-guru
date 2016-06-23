@@ -1,8 +1,8 @@
 import Ember from 'ember';
-const { inject } = Ember;
+const { Mixin, inject } = Ember;
 const { service } = inject;
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   pusher: service(),
 
   init() {
@@ -18,6 +18,8 @@ export default Ember.Mixin.create({
     const method = this._getEventMethodName(event);
     if (this[method] && this[method].apply) {
       this[method](data);
+    } else {
+      this.onPusherAction(event, data);
     }
   },
 
